@@ -1,0 +1,19 @@
+{
+  "url": "https://app.ethsign.xyz/",
+  "name": "EthSign",
+  "iconUrl": "https://app.ethsign.xyz/favicon.ico",
+  "termsOfUseUrl": "https://docs.ethsign.xyz/ethsign-next/ethsign-next/introduction",
+  "privacyPolicyUrl": "https://docs.ethsign.xyz/ethsign-next/ethsign-next/introduction",
+  "short_name": "EthSign",
+  "icons": [
+    {
+      "src": "https://cdn-hk.ethsign.xyz/signatures-next/logo_144x144_230914121207.webp",
+      "sizes": "144x144"
+    }
+  ],
+  "start_url": "/",
+  "theme_color": "#ffffff",
+  "background_color": "#FFFFFF",
+  "display": "standalone",
+  "orientation": "portrait"
+}
