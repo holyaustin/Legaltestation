@@ -1,30 +1,47 @@
 require("@nomicfoundation/hardhat-toolbox");
+require('dotenv').config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  solidity: "0.8.24",
+  solidity: {
+    version: "0.8.24",
+    settings: {
+      optimizer: {
+        enabled: true,
+        runs: 200
+      }
+    }
+  },
 
   networks: {
-    arbitrumSepolia: {
-      url: "https://sepolia.base.org",
+    hardhat: {
+      chainId: 1337
+    },
+   
+    baseSepolia: {
+      url: process.env.BASE_RPC,
+      accounts: [process.env.ACCOUNT_PRIVATE_KEY],
+    },
 
-      accounts: [""],
+    'op-sepolia': {
+      url: process.env.OP_RPC,
+      accounts: [process.env.ACCOUNT_PRIVATE_KEY],
     },
   },
 
   etherscan: {
     customChains: [
       {
-        network: "arbitrumSepolia",
-        chainId: 421614,
+        network: "baseSepolia",
+        chainId: 84532,
         urls: {
-          apiURL: "https://sepolia.arbiscan.io/api", // Replace with your mode network node URL
-          browserURL: "https://sepolia.arbiscan.io/", // Replace with your mode network browser URL
+          apiURL: "https://sepolia.basescan.org/api", // Replace with your mode network node URL
+          browserURL: "https://sepolia.basescan.org/", // Replace with your mode network browser URL
         },
       },
     ],
     apiKey: {
-      arbitrumSepolia: "",
+      baseSepolia: "",
     },
   },
 };
