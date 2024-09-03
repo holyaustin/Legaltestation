@@ -1,256 +1,85 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@font-face {
-  font-family: 'IBM Plex Sans';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-Regular.ttf') format('truetype');
-  font-weight: 400;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans Italic';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-Italic.ttf') format('truetype');
-  font-weight: 400;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans Thin';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-Thin.ttf') format('truetype');
-  font-weight: 100;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans Thin Italic';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-ThinItalic.ttf') format('truetype');
-  font-weight: 100;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans ExtraLight';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-ExtraLight.ttf') format('truetype');
-  font-weight: 200;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans ExtraLight Italic';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-ExtraLightItalic.ttf') format('truetype');
-  font-weight: 200;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans Light';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-Light.ttf') format('truetype');
-  font-weight: 300;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans Light Italic';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-LightItalic.ttf') format('truetype');
-  font-weight: 300;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans Medium';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-Medium.ttf') format('truetype');
-  font-weight: 500;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans Medium Italic';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-MediumItalic.ttf') format('truetype');
-  font-weight: 500;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans SemiBold';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-SemiBold.ttf') format('truetype');
-  font-weight: 600;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans SemiBold Italic';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-SemiBoldItalic.ttf') format('truetype');
-  font-weight: 600;
-  font-style: italic;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans Bold';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-Bold.ttf') format('truetype');
-  font-weight: 700;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'IBM Plex Sans Bold Italic';
-  src: url('https://cdn-hk.ethsign.xyz/fonts/IBMPlexSans/IBMPlexSans-BoldItalic.ttf') format('truetype');
-  font-weight: 700;
-  font-style: italic;
-  font-display: swap;
-}
+/* MattBlack Theme */
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 240 71.43% 6.86%;
-    --muted: 216 23.81% 95.88%;
-    --muted-foreground: 220.65 13.19% 46.08%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 240 71.43% 6.86%;
-    --card: 0 0% 100%;
-    --card-foreground: 240 71.43% 6.86%;
-    --border: 210 18.18% 95.69%;
-    --input: 210 18.18% 95.69%;
-    --primary: 221 100% 50%;
-    --primary-foreground: 240 33.33% 99.41%;
-    --secondary: 216 23.81% 95.88%;
-    --secondary-foreground: 240 100% 3.33%;
-    --accent: 216 23.81% 95.88%;
-    --accent-foreground: 240 100% 3.33%;
-    --destructive: 3.91 85.98% 58.04%;
-    --destructive-foreground: 240 33.33% 99.41%;
-    --ring: 220.71deg 100% 50%;
-    --radius: 0.5rem;
+  @font-face {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("https://rsms.me/inter/inter.css") format("css");
   }
 
-  .dark {
-    --background: 240 71% 7%;
-    --foreground: 0 0% 93%;
-    --muted: 228.46 37.14% 13.73%;
-    --muted-foreground: 217.78 15.08% 64.9%;
-    --popover: 240 71.43% 6.86%;
-    --popover-foreground: 240 33.33% 99.41%;
-    --card: 240 71.43% 6.86%;
-    --card-foreground: 240 33.33% 99.41%;
-    --border: 228.46 37.14% 13.73%;
-    --input: 230, 24%, 20%;
-    --primary: 21 87% 53%;
-    --primary-foreground: 240 33.33% 99.41%;
-    --secondary: 228.46 37.14% 13.73%;
-    --secondary-foreground: 218 15% 65%;
-    --accent: 227 36% 15%;
-    --accent-foreground: 240 20% 99%;
-    --destructive: 4 74% 49%;
-    --destructive-foreground: 240 33.33% 99.41%;
-    --ring: 20.87 86.61% 53.14%;
-    --popover-hover: 214 33% 17%;
-    --hover: 227 36% 15%;
-    --border-hover: 220 13% 37%;
-    --background-input: 228 37% 16%;
-  }
-}
-
-@layer base {
-  * {
-    @apply border-border;
-  }
-
+  html,
   body {
-    @apply bg-background text-foreground;
+    font-family: "Inter", sans-serif;
+    background-color: #121212;
+    color: #fff;
+  }
+
+  a {
+    color: #3b82f6;
   }
 }
 
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
-
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-html,body {
-  height: 100%;
-  width: 100%;
-  overflow: hidden;
-}
-
-@keyframes shake {
-  10%, 90% {
-    transform: translate3d(-1px, 0, 0);
-  }
-  
-  20%, 80% {
-    transform: translate3d(1px, 0, 0);
+@layer components {
+  .btn {
+    @apply px-4 py-2 rounded text-white;
   }
 
-  30%, 50%, 70% {
-    transform: translate3d(-2px, 0, 0);
+  .btn-blue {
+    @apply bg-blue-500;
   }
 
-  40%, 60% {
-    transform: translate3d(2px, 0, 0);
+  .btn-red {
+    @apply bg-red-500;
   }
-}
 
+  .form-input {
+    @apply p-2 border rounded text-black; /* Set text color to black */
+  }
 
-@keyframes attention-seek {
-  0%, 10%, 20%, 30%, 40%, 50%, 60%, 70% {
-    transform: rotate(0deg);
+  .btn-green {
+    @apply bg-green-500;
   }
-  5%, 15%, 25%, 35%, 45%, 55%, 65% {
-    transform: rotate(-5deg);
+
+  .form-input {
+    @apply p-2 border rounded;
   }
-  10%, 20%, 30%, 40%, 50%, 60% {
-    transform: rotate(5deg);
+
+  .table {
+    @apply w-full border-collapse;
   }
-  80%, 100% {
-    transform: rotate(0deg);
+
+  .table th,
+  .table td {
+    @apply border px-4 py-2;
+  }
+
+  .border-l {
+    @apply border-l;
+  }
+
+  .border-t {
+    @apply border-t;
+  }
+
+  .border-r {
+    @apply border-r;
+  }
+
+  .border-b {
+    @apply border-b;
   }
 }
 
-
-*:focus {
-  outline: none !important;
-  box-shadow: none !important;
-}
-
-@keyframes ripple {
-  0% {
-      box-shadow: 
-        0 0 0 0px rgba(var(--ripple-color), 0.5),
-        0 0 0 2px rgba(var(--ripple-color), 0.3),
-        0 0 0 4px rgba(var(--ripple-color), 0.1);
-  }
-  
-  100% {
-    box-shadow: 
-      0 0 0 15px rgba(var(--ripple-color), 0),
-      0 0 0 25px rgba(var(--ripple-color), 0),
-      0 0 0 35px rgba(var(--ripple-color), 0);
-  }
-}
-
-@keyframes drop {
-  0% {
-      top: -20%; 
-  }
-  100% {
-      top: 110%; 
+@layer utilities {
+  .underline {
+    @apply underline;
   }
 }
