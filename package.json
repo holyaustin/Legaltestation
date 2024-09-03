@@ -12,6 +12,7 @@
     "@ethsign/sign-protocol-evm": "^1.1.1",
     "@openzeppelin/contracts": "^5.0.2",
     "dotenv": "^16.4.5",
+    "ethers": "^5.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
@@ -34,7 +35,6 @@
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.6",
-    "ethers": "^6.4.0",
     "hardhat": "^2.14.0",
     "hardhat-gas-reporter": "^1.0.8",
     "postcss": "^8.4.38",
