@@ -29,7 +29,7 @@ contract eCourt is Ownable {
         bytes verdict;
         bytes[] evidenceList;
     }
-
+0xEbb3113e97eeaA16Dcc2FebD6a1617AB731066AE
     error CaseAlreadySettled();
     error CaseNotFound();
     error NotAuthorized();

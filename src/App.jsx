@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import eCourtContract from "../artifacts/contracts/eCourt.sol/eCourt.json";
@@ -26,6 +27,7 @@ function App() {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           await window.ethereum.request({ method: "eth_requestAccounts" });
           const signer = provider.getSigner();
+          console.log("Signer is", signer)
           const accounts = await provider.listAccounts();
           const contract = new ethers.Contract(
             eCourtContract.address,
@@ -156,11 +158,11 @@ function App() {
       </>
 
       <div>
-        <h1 className="text-3xl font-bold mb-4">eCourt DApp</h1>
+        <h1 className="text-3xl font-bold mb-4">Legal Dispute DApp</h1>
 
         <div className="grid grid-cols-2 gap-4 mb-8">
           <div>
-            <h2 className="text-xl font-bold mb-2">Open a New Case</h2>
+            <h2 className="text-xl font-bold mb-2">Open a Dispute</h2>
             <div className="flex flex-col mb-4">
               <label htmlFor="defendant" className="mb-1">
                 Defendant Address:
