@@ -21,26 +21,10 @@ function App() {
   const [evidence, setEvidence] = useState("");
 
   useEffect(() => {
-    const init = async () => {
-      /**
-      let signer = null;
-      let provider;
-  
-      if (window.ethereum == null) {
-          console.log("MetaMask not installed; using read-only defaults");
-          provider = ethers.getDefaultProvider();
-      } else {
-          provider = new ethers.providers.Web3Provider(window.ethereum);
-        signer = await provider.getSigner();
-        console.log({
-          provider,
-          signer,
-          //transactionContract
-      });
-      }
- */
 
-      try {
+    const init = async () => {
+
+          try {
         if (window.ethereum) {
           const provider = new ethers.providers.Web3Provider(window.ethereum);
           await window.ethereum.request({ method: "eth_requestAccounts" });
@@ -68,6 +52,8 @@ function App() {
 
     init();
   }, []);
+
+
 
   const handleOpenCase = async () => {
     try {
