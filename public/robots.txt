@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://momimter.vercel.app
+
+# Sitemaps
+Sitemap: https://momimter.vercel.app/sitemap.xml
