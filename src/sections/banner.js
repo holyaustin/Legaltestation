@@ -39,7 +39,7 @@ const Banner = () => {
              */}
           </Box>
           <Box as="figure" sx={styles.illustration}>
-            <Image src="/images/b1.jpg" loading="lazy" alt="video conferencing" />
+            <Image src="/images/banner.png" loading="lazy" alt="video conferencing" />
           </Box>
         </Box>
       </Container>

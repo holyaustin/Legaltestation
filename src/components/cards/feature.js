@@ -26,7 +26,7 @@ const styles = {
       mr: ['30px'],
     },
     h3: {
-      fontSize: '18px',
+      fontSize: '24px',
       lineHeight: 1.28,
       color: 'heading',
       marginBottom: '20px',

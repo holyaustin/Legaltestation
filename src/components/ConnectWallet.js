@@ -55,7 +55,7 @@ const ConnectWallet = () => {
           method: "eth_requestAccounts",
         });
         setAddress(accounts[0]);
-        navigate.push('/explore')
+        navigate.push('/dashboard')
       } catch (error) {
         console.error(error);
       }
