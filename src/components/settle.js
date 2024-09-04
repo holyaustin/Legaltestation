@@ -2,20 +2,10 @@
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import eCourtContract from "../artifacts/contracts/eCourt.sol/eCourt.json";
-import { jsx, Box } from 'theme-ui';
-import { useRouter } from 'next/router'
-import { useNavigate, useLocation } from "react-router-dom";
-import Web3Modal from "web3modal";
-import Image from 'next/image';
-import { rgba } from 'polished';
-import Popup from 'reactjs-popup';
-//import 'reactjs-popup/dist/index.css';
-import fileNFT from "../../artifacts/contracts/Genic.sol/FileNFT.json";
-import { fileShareAddress } from "../../config";
 
 // MattBlack theme
 import "./index.css";
-function Dispute() {
+function App() {
   const [provider, setProvider] = useState(undefined);
   const [accounts, setAccounts] = useState([]);
   const [contract, setContract] = useState(undefined);
@@ -340,4 +330,4 @@ function Dispute() {
   );
 }
 
-export default Dispute;
+export default App;
