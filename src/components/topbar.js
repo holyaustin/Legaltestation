@@ -11,7 +11,7 @@ const TopBar = () => {
         <Text as="span" className="caption">
           <GiftBox /> Want to know when new features are added, just follow us on Twitter
         </Text>
-        <a href="https://twitter.com" target="_blank">
+        <a href="https://twitter.com/holyaustin" target="_blank">
           Follow us here <RightArrow />
         </a>
       </Box>

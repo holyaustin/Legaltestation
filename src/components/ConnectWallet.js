@@ -117,7 +117,7 @@ const ConnectWallet = () => {
           <Button variant="secondary" sx={styles.submit }
             type="button"  onClick={connectWallet}
           >
-            {haveMetamask ? "Explore Moments" : "Install metamask"}
+            {haveMetamask ? "Launch App" : "Install metamask"}
           </Button>
         </div>
       )}

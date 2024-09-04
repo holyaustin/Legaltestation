@@ -28,7 +28,8 @@ const styles = {
     display: [null, null, null, null, null, 'flex'],
     alignItems: [null, null, null, 'center'],
     flexGrow: [null, null, null, 1],
-    fontSize: ['10px', null, null, 4],
+    fontSize: ['10px', null, null, 6],
+    fontWeight:['10px', null, null, 'bolder'],
     a: {
       color: 'white',
       cursor: 'pointer',

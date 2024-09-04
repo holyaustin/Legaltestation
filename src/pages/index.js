@@ -19,7 +19,7 @@ export default function IndexPage() {
         <Banner />
         <Services />
         <UltimateFeatures />
-        {/**<Faq /> */}
+        <Faq /> 
       </Layout>
     </ThemeProvider>
   );

@@ -51,7 +51,7 @@ export default function Header() {
           className={state.isSticky ? 'is-sticky' : ''}
         >
           <Container sx={styles.container}>
-          <Image src="/images/mominter.png" loading="lazy" sx={styles.logo} alt="logo" />
+          <Image src="/images/legal3.png" loading="lazy" sx={styles.logo} alt="logo" />
             {/** <Logo sx={styles.logo} isSticky={state.isSticky} /> */}
 
             <Navbar
@@ -112,7 +112,8 @@ const styles = {
     justifyContent: 'space-between',
   },
   logo: {
-    mr: [null, null, null, null, 3, null, 5],
+    mr: [null, null, null, null, 3, null, 20],
+    //ml: [null, null, null, null, 3, null, 20],
     height: ['25px', null, null, '75px'],
   },
   buttonGroup: {

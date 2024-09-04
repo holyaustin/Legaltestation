@@ -19,7 +19,7 @@ export default function Footer() {
           <Box sx={styles.footerTopInner}>
             <Box sx={styles.about}>
               <Box sx={styles.logo}>
-              <Image src="/images/mominter_logo.png" loading="lazy" sx={styles.logo} alt="logo" />
+              <Image src="/images/legal3.png" loading="lazy" sx={styles.logo} alt="logo" />
                 {/**<Logo />*/}
               </Box>
               <Box sx={styles.terms}>
@@ -28,7 +28,7 @@ export default function Footer() {
                 <Link path="#!">Privacy</Link>
               </Box>
               <Text as="p" sx={styles.copyright}>
-                Copyright by {new Date().getFullYear()} MOMINTER
+                Copyright by {new Date().getFullYear()} Legaltestation
               </Text>
             </Box>
             {menuItems.map(({ id, title, items }) => (
