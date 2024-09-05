@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import eCourtContract from "../artifacts/contracts/eCourt.sol/eCourt.json";
+import eCourtContract from "../../artifacts2/contracts/eCourt.sol/eCourt.json";
 import { jsx, Box } from 'theme-ui';
 import { useRouter } from 'next/router'
 import { useNavigate, useLocation } from "react-router-dom";
@@ -12,9 +12,8 @@ import Popup from 'reactjs-popup';
 //import 'reactjs-popup/dist/index.css';
 import fileNFT from "../../artifacts/contracts/Genic.sol/FileNFT.json";
 import { fileShareAddress } from "../../config";
+//import "./index.css";
 
-// MattBlack theme
-import "./index.css";
 function Dispute() {
   const [provider, setProvider] = useState(undefined);
   const [accounts, setAccounts] = useState([]);
@@ -33,20 +32,35 @@ function Dispute() {
   useEffect(() => {
 
     const init = async () => {
-
-          try {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0x14a34' }], // chainId must be in hexadecimal numbers
+      });
+      
+      try {
+        
         if (window.ethereum) {
-          const provider = new ethers.providers.Web3Provider(window.ethereum);
-          await window.ethereum.request({ method: "eth_requestAccounts" });
+          const web3Modal = new Web3Modal({
+            //network: 'mainnet',
+            cacheProvider: true,
+          })
+          const connection = await web3Modal.connect();
+          const provider = new ethers.providers.Web3Provider(connection);
+          console.log("provider is", provider)
           const signer = provider.getSigner();
+          //const contract = new ethers.Contract(fileShareAddress, fileNFT.abi, signer);
+          //const data = await contract.fetchAllStorageItems();
           console.log("Signer is", signer)
           const accounts = await provider.listAccounts();
+          console.log("accounts is", accounts)
+          console.log("eCourtContract.address is", eCourtContract.address)
+          console.log("eCourtContract.abi is", eCourtContract.abi)
           const contract = new ethers.Contract(
             eCourtContract.address,
             eCourtContract.abi,
             signer
           );
-
+  
           setProvider(provider);
           setAccounts(accounts);
           setContract(contract);
@@ -59,11 +73,38 @@ function Dispute() {
         setError("Error while loading the application.");
       }
     };
-
+    // switchNetwork(); 
     init();
   }, []);
 
-
+  const switchNetwork = async () => {
+    if (!provider) return;
+    try {
+      await provider.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: toHex(8217) }],
+      });
+    } catch (switchError) {
+      // This error code indicates that the chain has not been added to MetaMask.
+      if (switchError.code === 4902) {
+        try {
+          await provider.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: toHex(8217),
+                chainName: "Klaytn TestNet",
+                rpcUrls: ["https://klaytn-mainnet-rpc.allthatnode.com:8551"],
+                blockExplorerUrls: ["https://baobob.scope.com/"],
+              },
+            ],
+          });
+        } catch (addError) {
+          throw addError;
+        }
+      }
+    }
+  };
 
   const handleOpenCase = async () => {
     try {
