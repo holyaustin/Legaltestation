@@ -76,7 +76,8 @@ function Dispute() {
     // switchNetwork(); 
     init();
   }, []);
-
+  
+/**
   const switchNetwork = async () => {
     if (!provider) return;
     try {
@@ -105,7 +106,8 @@ function Dispute() {
       }
     }
   };
-
+ */
+  
   const handleOpenCase = async () => {
     try {
       const filingFeeWei = ethers.utils.parseEther(filingFee.toString());
@@ -113,12 +115,17 @@ function Dispute() {
         value: filingFeeWei,
         gasLimit: 3000000, // Manually set the gas limit
       };
+      console.log("defendant is ", defendant)
+      console.log("caseDetails is ", caseDetails)
+      console.log("filingFeeWei is ", filingFeeWei)
+      console.log("overrides is ", overrides)
       const tx = await contract.openCase(
         defendant,
         caseDetails,
         filingFeeWei,
         overrides
       );
+      console.log("transaction is = ", tx)
       await tx.wait();
       alert("Case opened successfully!");
       setDefendant("");
@@ -201,6 +208,7 @@ function Dispute() {
 
   return (
     <div className="min-h-screen bg-gray-900 text-white p-8">
+      {/**
       <>
         <button
           className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
@@ -211,9 +219,9 @@ function Dispute() {
           Connect Wallet
         </button>
       </>
-
+ */}
       <div>
-        <h1 className="text-3xl font-bold mb-4">Legal Dispute DApp</h1>
+        <h1 className="text-3xl font-bold mb-14 mt-36">Legal Dispute DApp</h1>
 
         <div className="grid grid-cols-2 gap-4 mb-8">
           <div>
