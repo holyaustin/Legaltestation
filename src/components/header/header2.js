@@ -56,7 +56,7 @@ export default function Header() {
           className={state.isSticky ? 'is-sticky' : ''}
         >
           <Container sx={styles.container}>
-          <Image src="/images/mominter_logo.png" loading="lazy" sx={styles.logo} alt="logo" />
+          <Image src="/images/legal3.png" loading="lazy" sx={styles.logo} alt="logo" />
 {/**
           <Navbar2
               isSticky={state.isSticky}
@@ -73,24 +73,16 @@ export default function Header() {
           <Link href="/">
           <a>Home</a>
           </Link>
-          <Link href="/explore">
-          <a>Video-On-Demand</a>
+          <Link href="/dashboard">
+          <a>Dispute</a>
           </Link>
-          <Link href="/publish">
-          <a>Publish-Moment</a>
+          <Link href="/settle">
+          <a>Settle</a>
           </Link>
-          <Link href="/encrypt">
-          <a> Encrypt-Upload</a>
+          <Link href="/evidence">
+          <a> Evidence</a>
           </Link>
-          <Link href="/Videoconference">
-          <a>Video-Conference </a>
-          </Link>
-          <Link href="/videoplayer">
-          <a> Video-Player</a>
-          </Link>
-
-
-          
+            
 {/**
           <Link href="/addfolder">
           <a>Video Marketplace</a>
@@ -133,15 +125,15 @@ export default function Header() {
 
 const styles = {
     navbar: {
-      display: [null, null, null, null, null, 'flex'],
-      alignItems: [null, null, null, 'center'],
+      display: ['flex', 'flex', 'flex', 'flex', null, 'flex'],
+      alignItems: [null,'center', 'center', 'center'],
       flexGrow: [null, null, null, 1],
       fontSize: ['10px', null, null, 5],
       a: {
         color: 'white',
         cursor: 'pointer',
         '+ a': {
-          ml: [null, null, null, null, null, 6],
+          ml: [null, null, 10, 10, null, 10],
         },
       },
       '@media only screen and (max-width: 1024px)': {
@@ -209,7 +201,7 @@ const styles = {
     justifyContent: 'space-between',
   },
   logo: {
-    mr: [null, null, null, null, 3, null, 5],
+    mr: [3, 3, 3, 3, 5, 10, 20],
     height: ['25px', null, null, '75px'],
   },
   buttonGroup: {
@@ -236,6 +228,6 @@ const styles = {
     fontSize: ['10px', null, null, 4],
   },
   hamburger: {
-    display: [null, null, null, null, null, 'none'],
+    display: [null, null, 'none', 'none', 'none', 'none'],
   },
 };

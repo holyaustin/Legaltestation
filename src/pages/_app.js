@@ -5,11 +5,7 @@ import Router from 'next/router';
 import { initGA, logPageView } from 'analytics';
 */
 import React, { useEffect } from 'react'
-import {
-  LivepeerConfig,
-  createReactClient,
-  studioProvider,
-} from '@livepeer/react';
+
 import Head from "next/head";
 import { AuthProvider, useAuth } from '@w3ui/react-keyring';
 import { UploaderProvider } from '@w3ui/react-uploader';
@@ -21,24 +17,19 @@ import "../styles/spinner.css";
 import "../styles/index.css";
 import "../styles/popup.css";
 
-const livepeerClient = createReactClient({
-  provider: studioProvider({
-    apiKey: process.env.NEXT_PUBLIC_STUDIO_API_KEY,
-  }),
-});
 
 export default function CustomApp({ Component, pageProps }) {
   
   // return 
   return (
  
-    <LivepeerConfig client={livepeerClient}>
+    <>
          <Head>
     <link rel="shortcut icon" href="/images/logoonlyblue.png" />
   </Head>
       {/** <CreateAndViewAsset /> */}
       <Component {...pageProps} /> 
-    </LivepeerConfig>
+    </>
   );
 
 }

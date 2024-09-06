@@ -1,17 +1,13 @@
 /* eslint-disable no-unused-vars */
 import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import eCourtContract from "../../artifacts2/contracts/eCourt.sol/eCourt.json";
+import eCourtContract from "../../artifacts/contracts/eCourt.sol/eCourt.json";
 import { jsx, Box } from 'theme-ui';
 import { useRouter } from 'next/router'
 import { useNavigate, useLocation } from "react-router-dom";
 import Web3Modal from "web3modal";
 import Image from 'next/image';
 import { rgba } from 'polished';
-import Popup from 'reactjs-popup';
-//import 'reactjs-popup/dist/index.css';
-import fileNFT from "../../artifacts/contracts/Genic.sol/FileNFT.json";
-import { fileShareAddress } from "../../config";
 //import "./index.css";
 
 function Dispute() {
@@ -34,7 +30,7 @@ function Dispute() {
     const init = async () => {
       await window.ethereum.request({
         method: 'wallet_switchEthereumChain',
-        params: [{ chainId: '0x14a34' }], // chainId must be in hexadecimal numbers
+        params: [{ chainId: '0xaa37dc' }], // chainId must be in hexadecimal numbers
       });
       
       try {
@@ -76,7 +72,7 @@ function Dispute() {
     // switchNetwork(); 
     init();
   }, []);
-  
+
 /**
   const switchNetwork = async () => {
     if (!provider) return;
@@ -113,7 +109,7 @@ function Dispute() {
       const filingFeeWei = ethers.utils.parseEther(filingFee.toString());
       const overrides = {
         value: filingFeeWei,
-        gasLimit: 3000000, // Manually set the gas limit
+        gasLimit: 5000000000, // Manually set the gas limit
       };
       console.log("defendant is ", defendant)
       console.log("caseDetails is ", caseDetails)
@@ -144,7 +140,7 @@ function Dispute() {
       );
       const overrides = {
         value: settlementFeeWei,
-        gasLimit: 3000000, // Manually set the gas limit
+        gasLimit: 10000000000000000, // Manually set the gas limit
       };
       const tx = await contract.settleCase(
         selectedCase,
@@ -199,31 +195,20 @@ function Dispute() {
       setError("Error while loading cases.");
     }
   };
-
+/**
   useEffect(() => {
     if (contract && accounts.length > 0) {
       loadCases();
     }
   }, [contract, accounts]);
-
+ */
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
-      {/**
-      <>
-        <button
-          className="bg-blue-500 text-white px-4 py-2 rounded mb-4"
-          onClick={() =>
-            window.ethereum.request({ method: "eth_requestAccounts" })
-          }
-        >
-          Connect Wallet
-        </button>
-      </>
- */}
-      <div>
-        <h1 className="text-3xl font-bold mb-14 mt-36">Legal Dispute DApp</h1>
+    <div className="min-h-screen bg-gray-900 text-white p-8 ">
 
-        <div className="grid grid-cols-2 gap-4 mb-8">
+      <div className="mx-10">
+        <h1 className="text-3xl font-bold mb-14 mt-36">Legal Dispute DApp (Create Dispute)</h1>
+
+        <div className="grid gap-4 mb-8 mt-10">
           <div>
             <h2 className="text-xl font-bold mb-2">Open a Dispute</h2>
             <div className="flex flex-col mb-4">
@@ -233,7 +218,7 @@ function Dispute() {
               <input
                 type="text"
                 id="defendant"
-                className="p-2 border rounded text-black"
+                className="p-2 border w-full rounded text-black"
                 value={defendant}
                 onChange={(e) => setDefendant(e.target.value)}
               />
@@ -268,96 +253,9 @@ function Dispute() {
               Open Case
             </button>
           </div>
-          <div>
-            <h2 className="text-xl font-bold mb-2">Settle a Case</h2>
-            <div className="flex flex-col mb-4">
-              <label htmlFor="selectCase" className="mb-1">
-                Select Case:
-              </label>
-              <select
-                id="selectCase"
-                className="p-2 border rounded text-black"
-                value={selectedCase}
-                onChange={(e) => setSelectedCase(e.target.value)}
-              >
-                <option value="">Select a Case</option>
-                {cases.map((c) => (
-                  <option key={c.caseId} value={c.caseId}>
-                    {c.caseId} - {c.caseDetails}
-                  </option>
-                ))}
-              </select>
-            </div>
-            <div className="flex flex-col mb-4">
-              <label htmlFor="verdict" className="mb-1">
-                Verdict:
-              </label>
-              <textarea
-                id="verdict"
-                className="p-2 border rounded h-24 text-black"
-                value={verdict}
-                onChange={(e) => setVerdict(e.target.value)}
-              />
-            </div>
-            <div className="flex flex-col mb-4">
-              <label htmlFor="settlementFee" className="mb-1">
-                Settlement Fee (ETH):
-              </label>
-              <input
-                type="number"
-                id="settlementFee"
-                className="p-2 border rounded text-black"
-                value={settlementFee}
-                onChange={(e) => setSettlementFee(e.target.value)}
-              />
-            </div>
-            <button
-              className="bg-blue-500 text-white px-4 py-2 rounded"
-              onClick={handleSettleCase}
-            >
-              Settle Case
-            </button>
-          </div>
-        </div>
-        <div>
-          <h2 className="text-xl font-bold mb-2">Submit Evidence</h2>
-          <div className="flex flex-col mb-4">
-            <label htmlFor="selectCaseEvidence" className="mb-1">
-              Select Case:
-            </label>
-            <select
-              id="selectCaseEvidence"
-              className="p-2 border rounded text-black"
-              value={selectedCase}
-              onChange={(e) => setSelectedCase(e.target.value)}
-            >
-              <option value="">Select a Case</option>
-              {cases.map((c) => (
-                <option key={c.caseId} value={c.caseId}>
-                  {c.caseId} - {c.caseDetails}
-                </option>
-              ))}
-            </select>
-          </div>
-          <div className="flex flex-col mb-4">
-            <label htmlFor="evidence" className="mb-1">
-              Evidence:
-            </label>
-            <textarea
-              id="evidence"
-              className="p-2 border rounded h-24 text-black"
-              value={evidence}
-              onChange={(e) => setEvidence(e.target.value)}
-            />
-          </div>
-          <button
-            className="bg-blue-500 text-white px-4 py-2 rounded"
-            onClick={handleSubmitEvidence}
-          >
-            Submit Evidence
-          </button>
-        </div>
-        <div>
+
+          
+          <div className="mt-10">
           <h2 className="text-xl font-bold mb-2">Your Cases</h2>
           <table className="table-auto w-full">
             <thead>
@@ -383,6 +281,8 @@ function Dispute() {
               ))}
             </tbody>
           </table>
+          </div>
+          
         </div>
       </div>
     </div>

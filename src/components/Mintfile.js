@@ -1,187 +1,255 @@
-/** @jsxRuntime classic */
-/** @jsx jsx */
-
-import React, { useState } from "react";
-import { jsx, Box } from 'theme-ui';
-import { NFTStorage } from "nft.storage";
-import { useRouter } from 'next/router'
+/* eslint-disable no-unused-vars */
+import React, { useState, useEffect } from "react";
 import { ethers } from "ethers";
+import eCourtContract from "../../artifacts/contracts/eCourt.sol/eCourt.json";
+import { jsx, Box } from 'theme-ui';
+import { useRouter } from 'next/router'
+import { useNavigate, useLocation } from "react-router-dom";
 import Web3Modal from "web3modal";
-import axios from 'axios'
+import Image from 'next/image';
 import { rgba } from 'polished';
-import { Wallet, providers } from "ethers";
+//import "./index.css";
 
-import 'dotenv/config';
-import fileNFT from "../../artifacts/contracts/Genic.sol/FileNFT.json";
-import { fileShareAddress } from "../../config";
-// const APIKEY = [process.env.NFT_STORAGE_API_KEY];
-const APIKEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDA4Zjc4ODAwMkUzZDAwNEIxMDI3NTFGMUQ0OTJlNmI1NjNFODE3NmMiLCJpc3MiOiJuZnQtc3RvcmFnZSIsImlhdCI6MTY1MzA1NjE4NzM4MCwibmFtZSI6InBlbnNpb25maSJ9.agI-2V-FeK_eVRAZ-T6KGGfE9ltWrTUQ7brFzzYVwdM";
+function Dispute() {
+  const [provider, setProvider] = useState(undefined);
+  const [accounts, setAccounts] = useState([]);
+  const [contract, setContract] = useState(undefined);
+  const [cases, setCases] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(undefined);
+  const [defendant, setDefendant] = useState("");
+  const [caseDetails, setCaseDetails] = useState("");
+  const [filingFee, setFilingFee] = useState(0);
+  const [selectedCase, setSelectedCase] = useState(undefined);
+  const [verdict, setVerdict] = useState("");
+  const [settlementFee, setSettlementFee] = useState(0);
+  const [evidence, setEvidence] = useState("");
 
-const MintFile = () => {
-  const navigate = useRouter();
-  const [errorMessage, setErrorMessage] = useState(null);
-  const [uploadedFile, setUploadedFile] = useState();
-  const [imageView, setImageView] = useState();
-  const [metaDataURL, setMetaDataURl] = useState();
-  const [txURL, setTxURL] = useState();
-  const [txStatus, setTxStatus] = useState();
-  const [formInput, updateFormInput] = useState({ name: "" });
+  useEffect(() => {
 
-  const handleFileUpload = (event) => {
-    console.log("file for upload selected...");
-    setUploadedFile(event.target.files[0]);
-    setTxStatus("");
-    setImageView("");
-    setMetaDataURl("");
-    setTxURL("");
-  };
-
-  const uploadNFTContent = async (inputFile) => {
-    const { name, description } = formInput;
-    if (!name || !description || !inputFile) return;
-    const nftStorage = new NFTStorage({ token: APIKEY, });
-    try {
-      console.log("Trying to upload file to ipfs");
-      setTxStatus("Uploading Item to IPFS & Filecoin via NFT.storage.");
-      console.log("close to metadata");
-      const metaData = await nftStorage.store({
-        name,
-        description,
-        image: inputFile,
+    const init = async () => {
+      await window.ethereum.request({
+        method: 'wallet_switchEthereumChain',
+        params: [{ chainId: '0xaa37dc' }], // chainId must be in hexadecimal numbers
       });
-      setMetaDataURl(metaData.url);
-      console.log("metadata is: ", { metaData });
-      return metaData;
-    } catch (error) {
-      setErrorMessage("Could store file to NFT.Storage - Aborted file upload.");
-      console.log("Error Uploading Content", error);
-    }
-  };
+      
+      try {
+        
+        if (window.ethereum) {
+          const web3Modal = new Web3Modal({
+            //network: 'mainnet',
+            cacheProvider: true,
+          })
+          const connection = await web3Modal.connect();
+          const provider = new ethers.providers.Web3Provider(connection);
+          console.log("provider is", provider)
+          const signer = provider.getSigner();
+          //const contract = new ethers.Contract(fileShareAddress, fileNFT.abi, signer);
+          //const data = await contract.fetchAllStorageItems();
+          console.log("Signer is", signer)
+          const accounts = await provider.listAccounts();
+          console.log("accounts is", accounts)
+          console.log("eCourtContract.address is", eCourtContract.address)
+          console.log("eCourtContract.abi is", eCourtContract.abi)
+          const contract = new ethers.Contract(
+            eCourtContract.address,
+            eCourtContract.abi,
+            signer
+          );
+  
+          setProvider(provider);
+          setAccounts(accounts);
+          setContract(contract);
+          setLoading(false);
+        } else {
+          throw new Error("Please install MetaMask.");
+        }
+      } catch (error) {
+        console.error("Error while loading the application: ", error);
+        setError("Error while loading the application.");
+      }
+    };
+    // switchNetwork(); 
+    init();
+  }, []);
 
-  const sendTxToBlockchain = async (metadata) => {
+/**
+  const switchNetwork = async () => {
+    if (!provider) return;
     try {
-      setTxStatus("Adding transaction to Blockchain");
-      const web3Modal = new Web3Modal();
-      const connection = await web3Modal.connect();
-      const provider = new ethers.providers.Web3Provider(connection);
-
-      // const privatefile = formInput.privatefile.toString();
-
-      const connectedContract = new ethers.Contract(fileShareAddress, fileNFT.abi, provider.getSigner());
-      console.log("Connected to contract", fileShareAddress);
-      console.log("IPFS blockchain uri is ", metadata.url);
-
-      const mintNFTTx = await connectedContract.createFile(metadata.url);
-      console.log("File successfully created and added to Blockchain");
-      await mintNFTTx.wait();
-      return mintNFTTx;
+      await provider.request({
+        method: "wallet_switchEthereumChain",
+        params: [{ chainId: toHex(8217) }],
+      });
+    } catch (switchError) {
+      // This error code indicates that the chain has not been added to MetaMask.
+      if (switchError.code === 4902) {
+        try {
+          await provider.request({
+            method: "wallet_addEthereumChain",
+            params: [
+              {
+                chainId: toHex(8217),
+                chainName: "Klaytn TestNet",
+                rpcUrls: ["https://klaytn-mainnet-rpc.allthatnode.com:8551"],
+                blockExplorerUrls: ["https://baobob.scope.com/"],
+              },
+            ],
+          });
+        } catch (addError) {
+          throw addError;
+        }
+      }
+    }
+  };
+ */
+  
+  const handleOpenCase = async () => {
+    try {
+      const filingFeeWei = ethers.utils.parseEther(filingFee.toString());
+      const overrides = {
+        value: filingFeeWei,
+        gasLimit: 5000000000, // Manually set the gas limit
+      };
+      console.log("defendant is ", defendant)
+      console.log("caseDetails is ", caseDetails)
+      console.log("filingFeeWei is ", filingFeeWei)
+      console.log("overrides is ", overrides)
+      const tx = await contract.openCase(
+        defendant,
+        caseDetails,
+        filingFeeWei,
+        overrides
+      );
+      console.log("transaction is = ", tx)
+      await tx.wait();
+      alert("Case opened successfully!");
+      setDefendant("");
+      setCaseDetails("");
+      setFilingFee(0);
     } catch (error) {
-      setErrorMessage("Failed to send tx to Nebula.");
-      console.log(error);
+      console.error("Error while opening the case: ", error);
+      alert("Error while opening the case.");
     }
   };
 
-  const previewNFT = (metaData, mintNFTTx) => {
-    console.log("getIPFSGatewayURL2 two is ...");
-    const imgViewString = getIPFSGatewayURL(metaData.data.image.pathname);
-    console.log("image ipfs path is", imgViewString);
-    setImageView(imgViewString);
-    setMetaDataURl(getIPFSGatewayURL(metaData.url));
-    setTxURL(`Check transaction on Filecoin Explorer`);
-    setTxStatus("File addition was successfully!");
-    console.log("File preview completed");
+  const handleSettleCase = async () => {
+    try {
+      const settlementFeeWei = ethers.utils.parseEther(
+        settlementFee.toString()
+      );
+      const overrides = {
+        value: settlementFeeWei,
+        gasLimit: 10000000000000000, // Manually set the gas limit
+      };
+      const tx = await contract.settleCase(
+        selectedCase,
+        verdict,
+        settlementFeeWei,
+        overrides
+      );
+      await tx.wait();
+      alert("Case settled successfully!");
+      setVerdict("");
+      setSettlementFee(0);
+      setSelectedCase(undefined);
+    } catch (error) {
+      console.error("Error while settling the case: ", error);
+      alert("Error while settling the case.");
+    }
   };
 
-  const mintNFTFile = async (e, uploadedFile) => {
-    e.preventDefault();
-    // 1. upload File content via NFT.storage
-    const metaData = await uploadNFTContent(uploadedFile);
-
-    // 2. Mint a NFT token on Nebula Chain
-    const mintNFTTx = await sendTxToBlockchain(metaData);
-
-    // 3. preview the minted nft
-   previewNFT(metaData, mintNFTTx);
-
-    //4. Mint Reward
-    // mintReward();
-
-    //5. navigate("/explore");
-    navigate.push('/explore');
+  const handleSubmitEvidence = async () => {
+    try {
+      const evidenceBytes = ethers.utils.toUtf8Bytes(evidence);
+      const overrides = {
+        gasLimit: 3000000, // Manually set the gas limit
+      };
+      const tx = await contract.submitEvidence(
+        selectedCase,
+        evidenceBytes,
+        overrides
+      );
+      await tx.wait();
+      alert("Evidence submitted successfully!");
+      setEvidence("");
+      setSelectedCase(undefined);
+    } catch (error) {
+      console.error("Error while submitting evidence: ", error);
+      alert("Error while submitting evidence.");
+    }
   };
 
-  const getIPFSGatewayURL = (ipfsURL) => {
-    const urlArray = ipfsURL.split("/");
-    console.log("urlArray = ", urlArray);
-    const ipfsGateWayURL = `https://${urlArray[2]}.ipfs.nftstorage.link/${urlArray[3]}`;
-    console.log("ipfsGateWayURL = ", ipfsGateWayURL)
-    return ipfsGateWayURL;
+  const loadCases = async () => {
+    try {
+      const userCases = await contract.getUserCases(accounts[0]);
+      const casesData = await Promise.all(
+        userCases.map(async (caseId) => {
+          const caseData = await contract.getCaseDetails(caseId);
+          return { ...caseData, caseId };
+        })
+      );
+      setCases(casesData);
+    } catch (error) {
+      console.error("Error while loading cases: ", error);
+      setError("Error while loading cases.");
+    }
   };
-
+/**
+  useEffect(() => {
+    if (contract && accounts.length > 0) {
+      loadCases();
+    }
+  }, [contract, accounts]);
+ */
   return (
-    <Box as="section"  sx={styles.section}>
-      <div className="text-2xl text-center text-black font-bold pt-10">
-        <h1> Upload a Video Moment</h1>
-      </div>
-      <div className="flex justify-center bg-blue-100">
-        <div className="w-1/2 flex flex-col pb-12 ">
-        <input
-            placeholder="Name your Moment"
-            className="mt-5 border rounded p-4 text-xl"
-            onChange={(e) => updateFormInput({ ...formInput, name: e.target.value })}
-          />
-          <br />
-          <textarea
-            placeholder="Brief description of Moment"
-            className="mt-5 border rounded p-4 text-xl"
-            onChange={(e) => updateFormInput({ ...formInput, description: e.target.value })}
-            rows={2}
-          />
-          <br />
-          <div className="MintNFT text-black text-xl">
-            <form>
-              <h3>Select a File</h3>
-              <input type="file" onChange={handleFileUpload} className="text-black mt-2 border rounded  text-2xl" />
-            </form>
-            {txStatus && <p>{txStatus}</p>}
-            
-            {metaDataURL && <p className="text-blue"><a href={metaDataURL} className="text-blue">Metadata on IPFS</a></p>}
-            
-            {txURL && <p><a href={txURL} className="text-blue">See the mint transaction</a></p>}
-           
-            {errorMessage}
+    <div className="min-h-screen bg-gray-900 text-white p-8">
 
-            
-            {imageView && (
-            <iframe
-              className="mb-10"
-              title="File"
-              src={imageView}
-              alt="File preview"
-              frameBorder="0"
-              scrolling="auto"
-              height="50%"
-              width="100%"
-            />
-            )}
+      <div className="mx-10">
+        <h1 className="text-3xl font-bold mb-14 mt-36">Legal Dispute DApp (Submit Evidence / Exhibit)</h1>
 
+        <div >
+          <h2 className="text-xl font-bold mb-2">Submit Evidence</h2>
+          <div className="flex flex-col mb-4">
+            <label htmlFor="selectCaseEvidence" className="mb-1">
+              Select Case:
+            </label>
+            <select
+              id="selectCaseEvidence"
+              className="p-2 border rounded text-black"
+              value={selectedCase}
+              onChange={(e) => setSelectedCase(e.target.value)}
+            >
+              <option value="">Select a Case</option>
+              {cases.map((c) => (
+                <option key={c.caseId} value={c.caseId}>
+                  {c.caseId} - {c.caseDetails}
+                </option>
+              ))}
+            </select>
           </div>
-
-          <button type="button" onClick={(e) => mintNFTFile(e, uploadedFile)} className="font-bold mt-20 bg-yellow-500 text-white text-2xl rounded p-4 shadow-lg">
-            Publish Moment
+          <div className="flex flex-col mb-4">
+            <label htmlFor="evidence" className="mb-1">
+              Evidence:
+            </label>
+            <textarea
+              id="evidence"
+              className="p-2 border rounded h-24 text-black"
+              value={evidence}
+              onChange={(e) => setEvidence(e.target.value)}
+            />
+          </div>
+          <button
+            className="bg-blue-500 text-white px-4 py-2 rounded"
+            onClick={handleSubmitEvidence}
+          >
+            Submit Evidence
           </button>
         </div>
+
       </div>
-    </Box>
-
+    </div>
   );
-};
-export default MintFile;
+}
 
-const styles = {
-  section: {
-    backgroundColor: 'primary',
-    pt: [17, null, null, 20, null],
-    pb: [6, null, null, 12, 16],
-  },
-};
+export default Dispute;
