@@ -128,7 +128,7 @@ const styles = {
       display: ['flex', 'flex', 'flex', 'flex', null, 'flex'],
       alignItems: [null,'center', 'center', 'center'],
       flexGrow: [null, null, null, 1],
-      fontSize: ['10px', null, null, 5],
+    fontSize: ['10px', null, null, 5],
       a: {
         color: 'white',
         cursor: 'pointer',
@@ -184,6 +184,7 @@ const styles = {
     left: 0,
     right: 0,
     py: 4,
+    backgroundColor: 'primary',
     transition: 'all 0.3s ease-in-out 0s',
     '&.is-sticky': {
       backgroundColor: 'white',

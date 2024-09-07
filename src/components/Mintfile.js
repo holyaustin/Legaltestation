@@ -203,7 +203,7 @@ function Dispute() {
   }, [contract, accounts]);
  */
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8">
+    <div className="min-h-screen bg-gray-900 text-white p-8 bg-black">
 
       <div className="mx-10">
         <h1 className="text-3xl font-bold mb-14 mt-36">Legal Dispute DApp (Submit Evidence / Exhibit)</h1>
@@ -230,7 +230,7 @@ function Dispute() {
           </div>
           <div className="flex flex-col mb-4">
             <label htmlFor="evidence" className="mb-1">
-              Evidence:
+              Evidence: You can put the URL of videos, audios and pictures also
             </label>
             <textarea
               id="evidence"
@@ -253,3 +253,10 @@ function Dispute() {
 }
 
 export default Dispute;
+const styles = {
+  section: {
+    backgroundColor: 'primary',
+    pt: [17, null, null, 20, null],
+    pb: [6, null, null, 12, null],
+  },
+}

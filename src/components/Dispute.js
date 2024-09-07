@@ -203,7 +203,7 @@ function Dispute() {
   }, [contract, accounts]);
  */
   return (
-    <div className="min-h-screen bg-gray-900 text-white p-8 ">
+    <div className="min-h-screen bg-black text-white p-8 ">
 
       <div className="mx-10">
         <h1 className="text-3xl font-bold mb-14 mt-36">Legal Dispute DApp (Create Dispute)</h1>
