@@ -7,8 +7,6 @@ import { initGA, logPageView } from 'analytics';
 import React, { useEffect } from 'react'
 
 import Head from "next/head";
-import { AuthProvider, useAuth } from '@w3ui/react-keyring';
-import { UploaderProvider } from '@w3ui/react-uploader';
 import '../assets/css/react-slick.css';
 import 'tailwindcss/tailwind.css';
 import "../styles/globals.css";
@@ -25,7 +23,7 @@ export default function CustomApp({ Component, pageProps }) {
  
     <>
          <Head>
-    <link rel="shortcut icon" href="/images/logoonlyblue.png" />
+    <link rel="shortcut icon" href="/images/legal3.png" />
   </Head>
       {/** <CreateAndViewAsset /> */}
       <Component {...pageProps} /> 

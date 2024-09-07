@@ -195,13 +195,13 @@ function Dispute() {
       setError("Error while loading cases.");
     }
   };
-/**
+
   useEffect(() => {
     if (contract && accounts.length > 0) {
       loadCases();
     }
   }, [contract, accounts]);
- */
+ 
   return (
     <div className="min-h-screen bg-black text-white p-8 ">
 
@@ -270,10 +270,10 @@ function Dispute() {
             <tbody>
               {cases.map((c) => (
                 <tr key={c.caseId}>
-                  <td className="border px-4 py-2">{c.caseId}</td>
-                  <td className="border px-4 py-2">{c.caseDetails}</td>
-                  <td className="border px-4 py-2">{c.plaintiff}</td>
-                  <td className="border px-4 py-2">{c.defendant}</td>
+                  <td className="border px-4 py-2">{c.caseId[1]}</td>
+                  <td className="border px-4 py-2">{c.caseDetails[1]}</td>
+                  <td className="border px-4 py-2">{c.plaintiff[1]}</td>
+                  <td className="border px-4 py-2">{c.defendant[1]}</td>
                   <td className="border px-4 py-2">
                     {c.isSettled ? "Settled" : "Active"}
                   </td>

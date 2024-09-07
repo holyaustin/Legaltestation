@@ -233,18 +233,10 @@ Consumer Protection:
 Ensuring fair and transparent terms in consumer contracts, warranties, and service agreements.
 Legaltestation can be applied across diverse sectors, offering a versatile and secure solution for a wide range of legal needs.
 
-
-OP NFTFactoryModule#eCourt - 0x42Fc1d53EcF8B4c46989da0d44f07490668338c8
-
-transact to eCourt.openCase errored: Error encoding arguments: Error: invalid BigNumber string (argument="value", value="0.000000001", code=INVALID_ARGUMENT, version=bignumber/5.7.0)
-
-300000000000
-
-Schema on op sepolia
-https://optimism-sepolia.blockscout.com/tx/0xcc4a7f0a225254d559b65fccca3815e700792984c4569209252e249dd728068d
-
 Schema on Sign Protocol
-https://testnet-scan.sign.global/schema/onchain_evm_11155420_0x13
+https://testnet-scan.sign.global/schema/onchain_evm_11155420_0x1a
 
-contract on op sepolia
-0x60cF847C6Ea49009ae290F749451F4CB66CAD0B2
+contract on optimism sepolia
+https://optimism-sepolia.blockscout.com/address/0x75f87ADB1Bf202ac17b18f84726C326491251478
+
+0x75f87ADB1Bf202ac17b18f84726C326491251478

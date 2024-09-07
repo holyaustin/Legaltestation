@@ -101,16 +101,16 @@ console.log("After recipeints");
             recipients: recipients,
             data: abi.encode(caseDetails)
         });
-console.log("After Attestation1");
-        // uint64 attestationId = spInstance.attest(a, "", "", "");
+        console.log("After Attestation1");
+        uint64 attestationId = spInstance.attest(a, "", "", "");
 
-console.log("After Attestation2");
+        console.log("After Attestation2");
         cases[caseId] = ECaseData({
             plaintiff: _msgSender(),
             defendant: defendant,
             caseDetails: caseDetails,
             isSettled: false,
-            attestationId: 111,
+            attestationId:attestationId,
             filingFee: filingFee,
             settlementFee: 0,
             verdict: bytes(""),
@@ -157,7 +157,7 @@ console.log("After cases");
         });
 
         uint64 newAttestationId = spInstance.attest(newAttestation, "", "", "");
-
+console.log("newAttestationId  is", newAttestationId );
         caseData.isSettled = true;
         caseData.settlementFee = settlementFee;
         caseData.verdict = verdict;
