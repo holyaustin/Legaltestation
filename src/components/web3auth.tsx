@@ -1,12 +1,28 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 /* eslint-disable no-console */
+/** @jsxRuntime classic */
+/** @jsx jsx */
 
 "use client";
 
 import { CHAIN_NAMESPACES, IProvider, WEB3AUTH_NETWORK } from "@web3auth/base";
 import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 import { Web3Auth } from "@web3auth/modal";
-import { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
+import {
+  jsx,
+  Box,
+  Flex,
+  Text,
+  Input,
+  Label,
+  Button,
+  Select,
+  Heading,
+  Container,
+} from 'theme-ui';
+import { rgba } from 'polished';
+import { useRouter } from 'next/router';
 
 import RPC from "./ethersRPC";
 // import RPC from "./viemRPC";
@@ -16,14 +32,14 @@ const clientId = "BPi5PB_UiIZ-cPz1GtV5i1I2iOSOHuimiXBI0e-Oe_u6X3oVAbCiAZOTEBtTXw
 
 const chainConfig = {
   chainNamespace: CHAIN_NAMESPACES.EIP155,
-  chainId: "0xaa36a7",
-  rpcTarget: "https://rpc.ankr.com/eth_sepolia",
+  chainId: "0xaa37dc",
+  rpcTarget: "https://sepolia.optimism.io",
   // Avoid using public rpcTarget in production.
   // Use services like Infura, Quicknode etc
-  displayName: "Ethereum Sepolia Testnet",
-  blockExplorerUrl: "https://sepolia.etherscan.io",
+  displayName: "Optimism Sepolia Testnet",
+  blockExplorerUrl: "https://sepolia.optimism.io",
   ticker: "ETH",
-  tickerName: "Ethereum",
+  tickerName: "Op Ethereum",
   logo: "https://cryptologos.cc/logos/ethereum-eth-logo.png",
 };
 
@@ -37,7 +53,8 @@ const web3auth = new Web3Auth({
   privateKeyProvider,
 });
 
-function App() {
+function Web3Wallet() {
+  const navigate = useRouter();
   const [provider, setProvider] = useState<IProvider | null>(null);
   const [loggedIn, setLoggedIn] = useState(false);
 
@@ -49,6 +66,7 @@ function App() {
 
         if (web3auth.connected) {
           setLoggedIn(true);
+          navigate.push('/dashboard')
         }
       } catch (error) {
         console.error(error);
@@ -63,6 +81,7 @@ function App() {
     setProvider(web3authProvider);
     if (web3auth.connected) {
       setLoggedIn(true);
+      navigate.push('/dashboard')
     }
   };
 
@@ -162,39 +181,122 @@ function App() {
   );
 
   const unloggedInView = (
-    <button onClick={login} className="card">
-      Login
-    </button>
+ <>
+
+<Button variant="secondary" sx={styles.submit }
+  type="button" onClick={login}
+>
+  Launch with Web3Auth
+</Button>
+</>
   );
 
   return (
     <div className="container">
-      <h1 className="title">
-        <a target="_blank" href="https://web3auth.io/docs/sdk/pnp/web/modal" rel="noreferrer">
-          Web3Auth{" "}
-        </a>
-        & NextJS Quick Start
-      </h1>
 
-      <div className="grid">{loggedIn ? loggedInView : unloggedInView}</div>
-      <div id="console" style={{ whiteSpace: "pre-line" }}>
-        <p style={{ whiteSpace: "pre-line" }}></p>
+      <div className="grid">
+        {loggedIn ? loggedInView : unloggedInView}
       </div>
 
-      <footer className="footer">
-        <a
-          href="https://github.com/Web3Auth/web3auth-pnp-examples/tree/main/web-modal-sdk/quick-starts/nextjs-modal-quick-start"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Source code
-        </a>
-        <a href="https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FWeb3Auth%2Fweb3auth-pnp-examples%2Ftree%2Fmain%2Fweb-modal-sdk%2Fquick-starts%2Fnextjs-modal-quick-start&project-name=w3a-nextjs-modal&repository-name=w3a-nextjs-modal">
-          <img src="https://vercel.com/button" alt="Deploy with Vercel" />
-        </a>
-      </footer>
+
     </div>
   );
 }
 
-export default App;
+export default Web3Wallet;
+
+const styles = {
+  section: {
+    backgroundColor: 'primary',
+    pt: [17, null, null, 20, null],
+    pb: [6, null, null, 12, 16],
+  },
+  grid: {
+    gap: ['30px 60px', null, null, null, '30px 40px', '30px 60px'],
+    display: 'grid',
+    minHeight: [null, null, null, null, null, '66vh', '81vh'],
+    alignItems: 'center',
+    gridTemplateColumns: [
+      '1fr',
+      null,
+      null,
+      null,
+      'repeat(2, 1fr)',
+      '510px 1fr',
+    ],
+  },
+  domainCard: {
+    background: 'white',
+    boxShadow: '0px 24px 50px rgba(54, 91, 125, 0.05)',
+    borderRadius: 10,
+    p: ['30px 25px 50px', null, null, '40px 40px 60px'],
+    m: [null, null, null, '0 auto', 'unset'],
+    maxWidth: [null, null, null, 480, 'none'],
+    h2: {
+      fontWeight: 700,
+      fontSize: [8, null, null, 10, 9, 14],
+      lineHeight: 1.36,
+      letterSpacing: 'heading',
+      color: 'textSecondary',
+      mb: [5, null, null, 7, 8],
+    },
+  },
+  inputGroup: {
+    alignItems: 'center',
+    border: (theme) => `1px solid ${theme.colors.borderColor}`,
+    borderRadius: 5,
+    px: [3, null, null, 6],
+    input: {
+      border: 0,
+      borderRadius: 0,
+      fontSize: [1, null, null, 2],
+      minHeight: [45, null, null, 60],
+      p: 0,
+      ':focus': {
+        boxShadow: 'none',
+      },
+      '::placeholder': {
+        fontSize: '15px',
+        lineHeight: 1.33,
+        color: rgba('#02073E', 0.4),
+      },
+      ':-webkit-autofill': {
+        WebkitBoxShadow: '0 0 0 30px white inset !important',
+      },
+    },
+    select: {
+      border: 0,
+      color: 'textSecondary',
+      fontWeight: 500,
+      fontSize: [0, null, null, '15px'],
+      lineHeight: 1.33,
+      letterSpacing: 'heading',
+      minHeight: [45, null, null, 60],
+      minWidth: [60, null, null, 75],
+      p: 0,
+      textTransform: 'uppercase',
+      ':focus': {
+        outline: 0,
+      },
+      '+ svg': {
+        color: '#A6A8BB',
+        height: 40,
+        width: 40,
+      },
+    },
+  },
+  submit: {
+    fontSize: [1, null, null, 6],
+    mt: [0],
+    minHeight: [45, null, null, 60],
+    width: '100%',
+  },
+  note: {
+    fontStyle: 'italic',
+    fontSize: [0, null, null, '15px'],
+    lineHeight: 1.33,
+    textAlign: 'center',
+    color: rgba('#02073E', 0.5),
+    mt: [4],
+  },
+};

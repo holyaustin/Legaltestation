@@ -16,6 +16,7 @@ import { useState } from 'react';
 import { rgba } from 'polished';
 import Image from '../components/image';
 import ConnectWallet from "../components/ConnectWallet";
+import Web3Wallet from "../components/web3auth";
 
 const Banner = () => {
  
@@ -32,6 +33,8 @@ const Banner = () => {
               <br />
             </div>
             <ConnectWallet />
+            <br/>           
+             <Web3Wallet />
        {/**
             <Text as="p" sx={styles.note} style={{color:`red`, fontSize: '15px', marginRight: '0.5rem', fontWeight: 'bold'}}>
             Connect your wallet to get started watching your favourite videos..
